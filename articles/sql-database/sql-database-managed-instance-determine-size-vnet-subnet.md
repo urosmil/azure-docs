@@ -30,10 +30,18 @@ By design, a Managed Instance needs a minimum of 16 IP addresses in a subnet and
 If you plan to deploy multiple Managed Instances inside the subnet and need to optimize on subnet size, use these parameters to form a calculation:
 
 - Azure uses five IP addresses in the subnet for its own needs
-- Each General Purpose instance needs two addresses
-- Each Business Critical instance needs four addresses
+- Each managed instance uses number of addreses that depends of pricing tier and hardware generation
 
-**Example**: You plan to have three General Purpose and two Business Critical Managed Instances. That means you need 5 + 3 * 2 + 2 * 4 = 19 IP addresses. As IP ranges are defined in power of 2, you need the IP range of 32 (2^5) IP addresses. Therefore, you need to reserve the subnet with subnet mask of /27.
+| **Pricing tier** | **Hardware generation** | **Used addresses** |
+| --- | --- | --- |
+| General Purpose | Gen4 | 6 |
+| General Purpose | Gen5 | 9 |
+| Business Critical | Gen4 | 6 |
+| Business Critical | Gen5 | 11 |
+
+**Example 1**: You plan to have three General Purpose (Gen5 hardware) and two Business Critical Managed Instances (Gen5 hardware). That means you need 5 + 3 * 9 + 2 * 11 = 43 IP addresses. As IP ranges are defined in power of 2, you need the IP range of 64 (2^6) IP addresses. Therefore, you need to reserve the subnet with subnet mask of /26.
+
+**Example 2**: You plan to have two General Purpose (Gen4 hardware) and one Business Critical Managed Instances (Gen5 hardware). That means you need 5 + 2 * 6 + 5 + 1 * 11 = 33 IP addresses. As IP ranges are defined in power of 2, you need the IP range of 64 (2^6) IP addresses. Therefore, you need to reserve the subnet with subnet mask of /26.
 
 > [!IMPORTANT]
 > Calculation displayed above will become obsolete with further improvements.
